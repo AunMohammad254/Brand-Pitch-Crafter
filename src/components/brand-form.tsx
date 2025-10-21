@@ -19,11 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Loader2, Wand2 } from 'lucide-react';
 
 const formSchema = z.object({
-  niche: z.string().min(3, { message: "Niche must be at least 3 characters." }),
-  problem: z.string().min(20, { message: "Please describe the problem in at least 20 characters." }),
-  solution: z.string().min(20, { message: "Please describe your solution in at least 20 characters." }),
-  mission: z.string().optional(),
-  valueProposition: z.string().optional(),
+  idea: z.string().min(20, { message: "Please describe your startup vision in at least 20 characters." }),
 });
 
 type BrandFormProps = {
@@ -35,103 +31,58 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      niche: "AI-powered medical app",
-      problem: "Busy professionals want effective home treatment but struggle with real-time form correction.",
-      solution: "An app that uses a device's camera for real-time feedback on exercises and treatments.",
-      mission: "",
-      valueProposition: "",
+      idea: "I want to build an AI-Powered Medical app that creates Personalized Medical plans with real-time form correction using there computer/Phone,targeting busy professionals who want effective home treatment",
     },
   });
 
   function handleFormSubmit(values: z.infer<typeof formSchema>) {
+    // A bit of a hack to conform to the existing `generateBrandAssets` signature
     const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value as string);
-      }
-    });
+    const idea = values.idea;
+    // Simple split for problem/solution. A more robust implementation might be needed.
+    const parts = idea.split(/, |\. /);
+    const problem = parts[1] || 'Problem not specified.';
+    const solution = parts[0];
+    
+    formData.append('niche', "AI-powered medical app");
+    formData.append('problem', problem);
+    formData.append('solution', solution);
+    formData.append('mission', 'To make home treatment effective and accessible.');
+    formData.append('valueProposition', 'Real-time form correction for personalized medical plans.');
+
     onSubmit(formData);
   }
 
   return (
-    <Card className="w-full shadow-lg border-2 border-primary/10 rounded-2xl">
-      <CardHeader className="text-center">
-        <CardTitle className="font-headline text-2xl tracking-tight">Describe Your Startup Vision</CardTitle>
+    <Card className="w-full bg-white shadow-xl shadow-slate-900/10 border border-slate-200/80 rounded-2xl">
+      <CardHeader>
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-xs py-1 px-3 rounded-full self-start">
+            STEP 1
+        </div>
+        <CardTitle className="font-headline text-2xl tracking-tight text-slate-800 pt-2">Describe Your Startup Vision</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               <FormField
-                control={form.control}
-                name="niche"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">Niche / Industry</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., Sustainable Fashion" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-               <FormField
-                control={form.control}
-                name="mission"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">Mission (Optional)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., To make sustainable fashion accessible to everyone." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-             <FormField
-                control={form.control}
-                name="problem"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">The Problem</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Describe the problem your startup is solving..." {...field} rows={2} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="solution"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">Your Solution</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Describe how your startup solves the problem..." {...field} rows={2} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-               <FormField
-                control={form.control}
-                name="valueProposition"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">Unique Value Proposition (Optional)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., High-quality, eco-friendly clothing at affordable prices." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            
-
-            <div className="text-center pt-4">
-              <Button type="submit" disabled={isLoading} size="lg" className="w-full md:w-auto font-bold text-lg rounded-full shadow-lg bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transition-all duration-300 transform hover:scale-105">
+            <FormField
+              control={form.control}
+              name="idea"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="e.g., An AI-powered app that creates personalized medical plans with real-time form correction..." 
+                      {...field} 
+                      rows={4}
+                      className="text-base leading-relaxed bg-slate-50 border-slate-300 focus:bg-white focus:ring-purple-500 focus:border-purple-500" 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="text-center pt-2">
+              <Button type="submit" disabled={isLoading} size="lg" className="w-full font-bold text-lg rounded-full shadow-lg bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 text-white">
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />

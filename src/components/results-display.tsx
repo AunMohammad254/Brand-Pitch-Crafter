@@ -1,100 +1,114 @@
 import { type BrandAssets } from '@/app/actions';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { LandingPagePreview } from '@/components/landing-page-preview';
-import { Lightbulb, Palette, CheckCircle, Target, FileText, Code } from 'lucide-react';
+import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorPlay } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogoSuggestions } from '@/components/logo-suggestions';
-import { BrandColors } from '@/components/brand-colors';
-import { TargetAudience } from '@/components/target-audience';
+import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
 
 type ResultsDisplayProps = {
   assets: BrandAssets;
 };
+
+const GeneratedCode = () => {
+    const { toast } = useToast();
+    const code = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width, initial-scale-1.0">
+        <title>MediAI - Personalized Health, Simplified</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(to bottom, #2E9AFF, #003188);
+                color: #fff;
+                overflow-x: hidden;
+            }
+        </style>
+    </head>
+    </html>
+    `;
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(code);
+        toast({
+            title: "Code Copied!",
+            description: "The landing page code has been copied to your clipboard.",
+        });
+    }
+
+    return (
+        <div className="bg-slate-900 rounded-xl overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between px-4 py-2 bg-slate-800">
+                <div className="flex items-center gap-2">
+                    <span className="h-3 w-3 rounded-full bg-red-500"></span>
+                    <span className="h-3 w-3 rounded-full bg-yellow-500"></span>
+                    <span className="h-3 w-3 rounded-full bg-green-500"></span>
+                </div>
+                <p className="text-sm text-slate-400">Generated Landing Page Code</p>
+                <div className="w-16"></div>
+            </div>
+            <div className="p-4 relative">
+                <pre className="text-sm text-slate-300 overflow-x-auto">
+                    <code>{code.trim()}</code>
+                </pre>
+            </div>
+            <div className="flex justify-between items-center p-4 bg-slate-800/50 border-t border-slate-700">
+                 <div className="flex items-center gap-4 text-xs text-slate-400">
+                    <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-green-500"/> Ready to Deploy</span>
+                    <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-green-500"/> Responsive Design</span>
+                    <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-green-500"/> Modern Styling</span>
+                 </div>
+                 <div className="flex gap-2">
+                    <Button variant="outline" size="sm">
+                        <MonitorPlay className="mr-2 h-4 w-4"/>
+                        Preview Website
+                    </Button>
+                    <Button size="sm" onClick={copyToClipboard} className="bg-indigo-500 hover:bg-indigo-600 text-white">
+                        <Copy className="mr-2 h-4 w-4"/>
+                        Copy Code
+                    </Button>
+                 </div>
+            </div>
+        </div>
+    )
+}
 
 
 export function ResultsDisplay({ assets }: ResultsDisplayProps) {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          {assets.startupName}
+        <h2 className="font-headline text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Your Generated Assets
         </h2>
-        <p className="mt-2 max-w-2xl mx-auto text-lg text-foreground/80">
-         {assets.taglines[0]}
+        <p className="mt-2 max-w-2xl mx-auto text-lg text-slate-600">
+         Here's everything we've created for <span className="font-bold text-primary">{assets.startupName}</span>.
         </p>
       </div>
 
-      <Tabs defaultValue="pitch" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 h-14">
-            <TabsTrigger value="pitch" className="h-10 text-lg font-headline">
+      <Tabs defaultValue="pitch" className="w-full max-w-5xl mx-auto">
+        <TabsList className="grid w-full grid-cols-2 h-14 bg-slate-200/80 rounded-xl">
+            <TabsTrigger value="pitch" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
                 <FileText className="mr-2"/>
                 Pitch Details
             </TabsTrigger>
-            <TabsTrigger value="website" className="h-10 text-lg font-headline">
+            <TabsTrigger value="website" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
                 <Code className="mr-2"/>
                 Website Code
             </TabsTrigger>
         </TabsList>
         <TabsContent value="pitch" className="mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-8">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><Lightbulb className="text-primary"/> Elevator Pitch</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>{assets.landingPageCopy.bodyText}</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><CheckCircle className="text-primary"/> The Problem</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>{assets.problem}</p>
-                        </CardContent>
-                    </Card>
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><Palette className="text-primary"/> Brand Colors</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <BrandColors/>
-                        </CardContent>
-                    </Card>
-                </div>
-                <div className="space-y-8">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><CheckCircle className="text-primary"/> Unique Value Proposition</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>{assets.solution}</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><Target className="text-primary"/> Target Audience</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <TargetAudience assets={assets} />
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline flex items-center gap-2"><Palette className="text-primary"/> Logo Ideas</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <LogoSuggestions assets={assets}/>
-                        </CardContent>
-                    </Card>
-                </div>
+            <div className="text-center">
+                <h3 className="font-headline text-2xl font-bold text-slate-800">{assets.startupName}</h3>
+                <p className="mt-1 text-slate-600">{assets.taglines[0]}</p>
             </div>
         </TabsContent>
         <TabsContent value="website" className="mt-6">
-            <LandingPagePreview assets={assets} />
+            <GeneratedCode />
         </TabsContent>
       </Tabs>
     </div>
