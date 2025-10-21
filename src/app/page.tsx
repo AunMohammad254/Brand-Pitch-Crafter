@@ -5,7 +5,7 @@ import { generateBrandAssets, type BrandAssets } from '@/app/actions';
 import { BrandForm } from '@/components/brand-form';
 import { ResultsDisplay } from '@/components/results-display';
 import { useToast } from "@/hooks/use-toast"
-import { Loader2 } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 
 export default function Home() {
   const [assets, setAssets] = useState<BrandAssets | null>(null);
@@ -33,11 +33,14 @@ export default function Home() {
   return (
     <main className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
       <div className="mx-auto max-w-3xl text-center">
-        <h1 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl md:text-6xl">
-          Brand Visionary
-        </h1>
-        <p className="mt-4 text-lg text-foreground/80">
-          Turn your startup idea into a full-fledged brand identity. Fill out the form below to get started.
+        <div className="flex justify-center items-center gap-2 mb-4">
+          <Sparkles className="h-8 w-8 text-primary" />
+          <h1 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl md:text-6xl">
+            PitchCraft AI
+          </h1>
+        </div>
+        <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto">
+          Transform your startup idea into a complete business package with AI-powered pitch generation and professional website code.
         </p>
       </div>
 

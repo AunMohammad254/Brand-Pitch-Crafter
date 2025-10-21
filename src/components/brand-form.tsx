@@ -35,9 +35,9 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      niche: "",
-      problem: "",
-      solution: "",
+      niche: "AI-powered medical app",
+      problem: "Busy professionals want effective home treatment but struggle with real-time form correction.",
+      solution: "An app that uses a device's camera for real-time feedback on exercises and treatments.",
       mission: "",
       valueProposition: "",
     },
@@ -54,63 +54,33 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl">Define Your Vision</CardTitle>
-        <CardDescription>Provide details about your startup to generate your brand assets.</CardDescription>
+    <Card className="w-full shadow-lg border-2 border-primary/10 rounded-2xl">
+      <CardHeader className="text-center">
+        <CardTitle className="font-headline text-2xl tracking-tight">Describe Your Startup Vision</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="niche"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Niche / Industry</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Sustainable Fashion" {...field} />
-                  </FormControl>
-                  <FormDescription>What market does your startup operate in?</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="problem"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>The Problem</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Describe the problem your startup is solving..." {...field} rows={3} />
-                  </FormControl>
-                  <FormDescription>What pain point are you addressing?</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="solution"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Your Solution</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Describe how your startup solves the problem..." {...field} rows={3} />
-                  </FormControl>
-                  <FormDescription>How do you solve this problem uniquely?</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FormField
+          <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               <FormField
+                control={form.control}
+                name="niche"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-semibold">Niche / Industry</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., Sustainable Fashion" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
                 control={form.control}
                 name="mission"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mission (Optional)</FormLabel>
+                    <FormLabel className="font-semibold">Mission (Optional)</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g., To make sustainable fashion accessible to everyone." {...field} />
                     </FormControl>
@@ -118,12 +88,39 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
                   </FormItem>
                 )}
               />
+            </div>
+             <FormField
+                control={form.control}
+                name="problem"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-semibold">The Problem</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Describe the problem your startup is solving..." {...field} rows={2} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
+                control={form.control}
+                name="solution"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-semibold">Your Solution</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Describe how your startup solves the problem..." {...field} rows={2} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
                 control={form.control}
                 name="valueProposition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Unique Value Proposition (Optional)</FormLabel>
+                    <FormLabel className="font-semibold">Unique Value Proposition (Optional)</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g., High-quality, eco-friendly clothing at affordable prices." {...field} />
                     </FormControl>
@@ -131,21 +128,23 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
                   </FormItem>
                 )}
               />
-            </div>
+            
 
-            <Button type="submit" disabled={isLoading} size="lg" className="w-full md:w-auto">
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Wand2 className="mr-2 h-4 w-4" />
-                  Generate Brand Identity
-                </>
-              )}
-            </Button>
+            <div className="text-center pt-4">
+              <Button type="submit" disabled={isLoading} size="lg" className="w-full md:w-auto font-bold text-lg rounded-full shadow-lg bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transition-all duration-300 transform hover:scale-105">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Wand2 className="mr-2 h-5 w-5" />
+                    Generate Complete Startup Package
+                  </>
+                )}
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

@@ -24,6 +24,10 @@ const GenerateLandingPageCopyOutputSchema = z.object({
   headline: z.string().describe('A compelling headline for the landing page.'),
   bodyText: z.string().describe('Engaging body text describing the startup and its value proposition.'),
   callToAction: z.string().describe('A clear and concise call to action for the landing page.'),
+  keyFeatures: z.array(z.object({
+    name: z.string().describe('The name of the key feature.'),
+    description: z.string().describe('A brief description of the key feature.')
+  })).describe('An array of 3 key features with names and descriptions.')
 });
 export type GenerateLandingPageCopyOutput = z.infer<typeof GenerateLandingPageCopyOutputSchema>;
 
@@ -37,7 +41,7 @@ const generateLandingPageCopyPrompt = ai.definePrompt({
   name: 'generateLandingPageCopyPrompt',
   input: {schema: GenerateLandingPageCopyInputSchema},
   output: {schema: GenerateLandingPageCopyOutputSchema},
-  prompt: `You are a marketing expert specializing in creating high-converting landing page copy. Based on the information provided about the startup, generate a compelling headline, engaging body text, and a clear call to action.
+  prompt: `You are a marketing expert specializing in creating high-converting landing page copy. Based on the information provided about the startup, generate a compelling headline, engaging body text, a clear call to action and 3 key features.
 
 Startup Name: {{{startupName}}}
 Niche: {{{niche}}}
@@ -47,7 +51,8 @@ Unique Value Proposition: {{{uniqueValueProposition}}}
 
 Headline:
 Body Text:
-Call to Action:`,
+Call to Action:
+Key Features:`,
 });
 
 const generateLandingPageCopyFlow = ai.defineFlow(

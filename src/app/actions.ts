@@ -28,6 +28,7 @@ export type BrandAssets = {
     headline: string;
     bodyText: string;
     callToAction: string;
+    keyFeatures: { name: string; description: string }[];
   };
   logoSuggestions: string[];
   problem: string;
