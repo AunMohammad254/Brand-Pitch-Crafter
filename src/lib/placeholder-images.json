@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Abstract purple and blue background",
+      "imageUrl": "https://images.unsplash.com/photo-1638272181967-7d3772a91265?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBwdXJwbGV8ZW58MHx8fHwxNzYwOTg1MjY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract purple"
+    },
+    {
+      "id": "feature1",
+      "description": "Person working on a laptop",
+      "imageUrl": "https://images.unsplash.com/photo-1620233317289-5c035358aa8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGFwdG9wJTIwd29ya3NwYWNlfGVufDB8fHx8MTc2MDg4MzgwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "laptop workspace"
+    },
+    {
+      "id": "feature2",
+      "description": "Team collaborating around a table",
+      "imageUrl": "https://images.unsplash.com/photo-1492366254240-43affaefc3e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NjA5NTgzNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "team collaboration"
+    },
+    {
+      "id": "feature3",
+      "description": "Lightbulb representing an idea",
+      "imageUrl": "https://images.unsplash.com/photo-1519936965587-5aa6cd16e48c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpZGVhJTIwbGlnaHRidWxifGVufDB8fHx8MTc2MTAwODM1OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "idea lightbulb"
+    }
+  ]
 }
