@@ -147,12 +147,12 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
       </div>
 
       <Tabs defaultValue="pitch" className="w-full max-w-5xl mx-auto">
-        <TabsList className="grid w-full grid-cols-2 h-14 bg-slate-200/80 dark:bg-slate-800 rounded-xl">
-            <TabsTrigger value="pitch" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
+        <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-slate-200/80 dark:bg-slate-800 p-1 text-muted-foreground w-full">
+            <TabsTrigger value="pitch" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:text-primary data-[state=active]:shadow-sm h-full flex-1 text-lg font-headline">
                 <FileText className="mr-2"/>
                 Pitch Details
             </TabsTrigger>
-            <TabsTrigger value="website" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
+            <TabsTrigger value="website" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:text-primary data-[state=active]:shadow-sm h-full flex-1 text-lg font-headline">
                 <Code className="mr-2"/>
                 Website Code
             </TabsTrigger>
@@ -294,6 +294,3 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
     </div>
   );
 }
-
-    
-    
