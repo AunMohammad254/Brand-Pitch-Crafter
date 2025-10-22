@@ -72,14 +72,6 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
                     <Sparkles />
                     {assets.startupName}
                   </a>
-                  <button
-                    type="button"
-                    className="-m-2.5 rounded-md p-2.5 text-foreground"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <X className="h-6 w-6" aria-hidden="true" />
-                  </button>
                 </div>
                 <div className="mt-6 flow-root">
                   <div className="-my-6 divide-y divide-gray-500/10">
@@ -182,5 +174,3 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
     </Card>
   );
 }
-
-    
