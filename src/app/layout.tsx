@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { AuthButtons } from '@/components/auth-buttons';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 
 export const metadata: Metadata = {
@@ -64,6 +65,11 @@ export default function RootLayout({
                         </Button>
                       </SheetTrigger>
                       <SheetContent>
+                        <SheetHeader>
+                          <SheetTitle>
+                            <VisuallyHidden>Mobile Menu</VisuallyHidden>
+                          </SheetTitle>
+                        </SheetHeader>
                         <nav className="flex flex-col gap-4 mt-8">
                             <Link href="/">
                               <Button variant="ghost" className="w-full justify-start">
