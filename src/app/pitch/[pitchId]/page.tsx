@@ -1,5 +1,6 @@
 'use client';
 
+import { use } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useFirebase, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -10,13 +11,14 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
-export default function PitchPage({ params }: { params: { pitchId: string } }) {
+export default function PitchPage({ params }: { params: Promise<{ pitchId: string }> }) {
   const { firestore, user } = useFirebase();
+  const { pitchId } = use(params);
 
   const pitchRef = useMemoFirebase(() => {
     if (!user) return null;
-    return doc(firestore, 'users', user.uid, 'startups', params.pitchId);
-  }, [firestore, user, params.pitchId]);
+    return doc(firestore, 'users', user.uid, 'startups', pitchId);
+  }, [firestore, user, pitchId]);
 
   const { data: pitch, isLoading } = useDoc<BrandAssets>(pitchRef);
 
