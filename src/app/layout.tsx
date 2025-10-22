@@ -1,3 +1,6 @@
+
+'use client';
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -8,21 +11,25 @@ import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { AuthButtons } from '@/components/auth-buttons';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { useState } from 'react';
 
-
-export const metadata: Metadata = {
-  title: 'PitchCraft AI',
-  description: 'Transform your startup idea into a complete business package with AI-powered pitch generation and professional website code.',
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>PitchCraft AI</title>
+        <meta name="description" content="Transform your startup idea into a complete business package with AI-powered pitch generation and professional website code." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -57,7 +64,7 @@ export default function RootLayout({
                     <AuthButtons />
                   </nav>
                   <div className="md:hidden">
-                    <Sheet>
+                    <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                       <SheetTrigger asChild>
                         <Button variant="ghost" size="icon">
                           <Menu className="h-5 w-5"/>
@@ -71,13 +78,13 @@ export default function RootLayout({
                           </SheetTitle>
                         </SheetHeader>
                         <nav className="flex flex-col gap-4 mt-8">
-                            <Link href="/">
+                            <Link href="/" onClick={handleLinkClick}>
                               <Button variant="ghost" className="w-full justify-start">
                                 <Pencil className="mr-2 h-4 w-4" />
                                 Generate Pitch
                               </Button>
                             </Link>
-                            <Link href="/my-pitches">
+                            <Link href="/my-pitches" onClick={handleLinkClick}>
                               <Button variant="ghost" className="w-full justify-start">
                                 <LayoutGrid className="mr-2 h-4 w-4" />
                                 My Pitches
@@ -122,3 +129,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+// Remove the default metadata export
+// export const metadata: Metadata = { ... }
