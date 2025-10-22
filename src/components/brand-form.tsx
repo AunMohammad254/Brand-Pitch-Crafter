@@ -54,12 +54,12 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
   }
 
   return (
-    <Card className="w-full bg-white shadow-xl shadow-slate-900/10 border border-slate-200/80 rounded-2xl">
+    <Card className="w-full bg-white dark:bg-slate-900 shadow-xl shadow-slate-900/10 border border-slate-200/80 dark:border-slate-800 rounded-2xl">
       <CardHeader>
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-xs py-1 px-3 rounded-full self-start">
             STEP 1
         </div>
-        <CardTitle className="font-headline text-2xl tracking-tight text-slate-800 pt-2">Describe Your Startup Vision</CardTitle>
+        <CardTitle className="font-headline text-2xl tracking-tight text-slate-800 dark:text-slate-100 pt-2">Describe Your Startup Vision</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -74,7 +74,7 @@ export function BrandForm({ onSubmit, isLoading }: BrandFormProps) {
                       placeholder="e.g., An AI-powered app that creates personalized medical plans with real-time form correction..." 
                       {...field} 
                       rows={4}
-                      className="text-base leading-relaxed bg-slate-50 border-slate-300 focus:bg-white focus:ring-purple-500 focus:border-purple-500" 
+                      className="text-base leading-relaxed bg-slate-50 border-slate-300 focus:bg-white focus:ring-purple-500 focus:border-purple-500 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:placeholder:text-slate-400 dark:focus:bg-slate-900" 
                     />
                   </FormControl>
                   <FormMessage />

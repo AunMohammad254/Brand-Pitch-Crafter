@@ -36,7 +36,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
   return (
     <Card className="overflow-hidden shadow-2xl transition-all hover:shadow-primary/20 rounded-2xl">
       <CardContent className="p-0">
-        <div className="bg-background">
+        <div className="bg-background text-foreground">
           <header className="absolute inset-x-0 top-0 z-50">
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
               <div className="flex lg:flex-1">
@@ -57,7 +57,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
               </div>
               <div className="hidden lg:flex lg:gap-x-12">
                 {navLinks.map((item) => (
-                  <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground/90">
+                  <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground/90 hover:text-foreground">
                     {item.name}
                   </a>
                 ))}
@@ -67,7 +67,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
               </div>
             </nav>
             <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+              <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10">
                 <DialogTitle asChild>
                   <VisuallyHidden>
                     <h2>Mobile Menu</h2>
@@ -80,7 +80,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
                   </a>
                 </div>
                 <div className="mt-6 flow-root">
-                  <div className="-my-6 divide-y divide-gray-500/10">
+                  <div className="-my-6 divide-y divide-gray-500/10 dark:divide-gray-500/20">
                     <div className="space-y-2 py-6">
                       {navLinks.map((item) => (
                         <a

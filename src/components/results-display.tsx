@@ -147,20 +147,20 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
       </div>
 
       <Tabs defaultValue="pitch" className="w-full max-w-5xl mx-auto">
-        <TabsList className="grid w-full grid-cols-2 h-14 bg-slate-200/80 rounded-xl">
-            <TabsTrigger value="pitch" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
+        <TabsList className="grid w-full grid-cols-2 h-14 bg-slate-200/80 dark:bg-slate-800 rounded-xl">
+            <TabsTrigger value="pitch" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
                 <FileText className="mr-2"/>
                 Pitch Details
             </TabsTrigger>
-            <TabsTrigger value="website" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
+            <TabsTrigger value="website" className="h-10 text-lg font-headline data-[state=active]:bg-white data-[state=active]:dark:bg-slate-900 data-[state=active]:shadow-md data-[state=active]:text-primary rounded-lg">
                 <Code className="mr-2"/>
                 Website Code
             </TabsTrigger>
         </TabsList>
         <TabsContent value="pitch" className="mt-8 space-y-8">
-            <div className="text-center p-8 bg-white rounded-2xl shadow-lg border">
-                <h3 className="font-headline text-4xl font-bold text-slate-800">{assets.startupName}</h3>
-                <p className="mt-2 text-lg text-slate-600">{assets.taglines[0]}</p>
+            <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border dark:border-slate-800">
+                <h3 className="font-headline text-4xl font-bold text-slate-800 dark:text-slate-100">{assets.startupName}</h3>
+                <p className="mt-2 text-lg text-slate-600 dark:text-slate-300">{assets.taglines[0]}</p>
                  <div className="mt-4 flex justify-center gap-2">
                     <Badge variant="secondary">Digital Health</Badge>
                     <Badge variant="secondary">3 Target Segments</Badge>
@@ -177,7 +177,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-slate-600">{assets.taglines[1]}</p>
+                        <p className="text-slate-600 dark:text-slate-300">{assets.taglines[1]}</p>
                     </CardContent>
                 </Card>
                  <Card>
@@ -188,7 +188,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                       <p className="text-slate-600">{assets.landingPageCopy.bodyText}</p>
+                       <p className="text-slate-600 dark:text-slate-300">{assets.landingPageCopy.bodyText}</p>
                     </CardContent>
                 </Card>
                  <Card>
@@ -199,7 +199,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-slate-600">{assets.problem}</p>
+                        <p className="text-slate-600 dark:text-slate-300">{assets.problem}</p>
                     </CardContent>
                 </Card>
                  <Card>
@@ -210,7 +210,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-slate-600">{assets.solution}</p>
+                        <p className="text-slate-600 dark:text-slate-300">{assets.solution}</p>
                     </CardContent>
                 </Card>
             </div>
@@ -223,7 +223,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-slate-600 mb-4">{assets.targetAudience.demographics}</p>
+                    <p className="text-slate-600 dark:text-slate-300 mb-4">{assets.targetAudience.demographics}</p>
                     <TargetAudience assets={assets} />
                 </CardContent>
             </Card>
@@ -238,20 +238,20 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                 <CardContent className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h4 className="font-semibold text-slate-700">Headline</h4>
-                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{landingPageCopy.headline}</p>
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200">Headline</h4>
+                            <p className="text-slate-600 dark:text-slate-300 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-md mt-1">{landingPageCopy.headline}</p>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-slate-700">Subheadline</h4>
-                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{assets.taglines[0]}</p>
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200">Subheadline</h4>
+                            <p className="text-slate-600 dark:text-slate-300 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-md mt-1">{assets.taglines[0]}</p>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-slate-700">Call to Action</h4>
-                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{landingPageCopy.callToAction}</p>
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200">Call to Action</h4>
+                            <p className="text-slate-600 dark:text-slate-300 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-md mt-1">{landingPageCopy.callToAction}</p>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-slate-700">Key Features</h4>
-                             <ul className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1 space-y-1 list-disc list-inside">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200">Key Features</h4>
+                             <ul className="text-slate-600 dark:text-slate-300 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-md mt-1 space-y-1 list-disc list-inside">
                                 {landingPageCopy.keyFeatures.map((feature) => (
                                     <li key={feature.name}><strong>{feature.name}:</strong> {feature.description}</li>
                                 ))}

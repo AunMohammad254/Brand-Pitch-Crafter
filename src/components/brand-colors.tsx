@@ -11,7 +11,7 @@ export function BrandColors() {
         <div className="grid grid-cols-2 gap-4">
             {colors.map(color => (
                 <div key={color.name} className="flex flex-col items-center gap-2">
-                    <div style={{ backgroundColor: color.value }} className="w-16 h-16 rounded-full border-2"/>
+                    <div style={{ backgroundColor: color.value }} className="w-16 h-16 rounded-full border-2 dark:border-slate-700"/>
                     <p className="text-sm font-medium">{color.label}</p>
                 </div>
             ))}

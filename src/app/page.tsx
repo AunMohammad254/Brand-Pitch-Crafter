@@ -70,7 +70,7 @@ export default function Home() {
                     </Button>
                   </Link>
                 </div>
-                <div className="flex items-center justify-center p-2 rounded-full bg-slate-100 border border-slate-200 w-full max-w-md mx-auto">
+                <div className="flex items-center justify-center p-2 rounded-full bg-slate-100 border border-slate-200 w-full max-w-md mx-auto dark:bg-slate-800 dark:border-slate-700">
                     {steps.map((step, index) => {
                       const isComplete = step.status === 'complete';
                       const isCurrent = step.status === 'current';
@@ -79,11 +79,11 @@ export default function Home() {
                       return (
                         <div key={step.name} className="flex items-center">
                             <div className="flex items-center gap-2">
-                                <Icon className={`h-5 w-5 ${isComplete ? 'text-green-500' : isCurrent ? 'text-primary' : 'text-slate-400'}`} />
-                                <span className={`text-sm font-medium ${isComplete ? 'text-slate-700' : isCurrent ? 'text-primary' : 'text-slate-400'}`}>{step.name}</span>
+                                <Icon className={`h-5 w-5 ${isComplete ? 'text-green-500' : isCurrent ? 'text-primary' : 'text-slate-400 dark:text-slate-500'}`} />
+                                <span className={`text-sm font-medium ${isComplete ? 'text-slate-700 dark:text-slate-300' : isCurrent ? 'text-primary' : 'text-slate-400 dark:text-slate-500'}`}>{step.name}</span>
                             </div>
                             {index < steps.length - 1 && (
-                                <ChevronRight className="h-5 w-5 text-slate-300 mx-3"/>
+                                <ChevronRight className="h-5 w-5 text-slate-300 dark:text-slate-600 mx-3"/>
                             )}
                         </div>
                       )
@@ -97,10 +97,10 @@ export default function Home() {
                         <Bot className="h-8 w-8 text-white" />
                     </div>
                 </div>
-                <h1 className="font-headline text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+                <h1 className="font-headline text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl md:text-6xl">
                     PitchCraft AI
                 </h1>
-                <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+                <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
                     Transform your startup idea into a complete business package with AI-powered pitch generation and professional website code.
                 </p>
             </div>
@@ -113,14 +113,14 @@ export default function Home() {
                 <div className="mt-12 flex flex-col items-center justify-center gap-4 text-center w-full">
                     <Loader2 className="h-12 w-12 animate-spin text-primary" />
                     <p className="font-headline text-2xl text-primary">Generating your brand...</p>
-                    <p className="text-slate-600">This might take a moment. We're brewing up something special for you!</p>
+                    <p className="text-slate-600 dark:text-slate-400">This might take a moment. We're brewing up something special for you!</p>
                 </div>
             )}
         </div>
       </div>
       
       {assets && (
-        <div id="results-section" className="mt-12 bg-white py-16 sm:py-24">
+        <div id="results-section" className="mt-12 bg-white dark:bg-slate-950 py-16 sm:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <ResultsDisplay assets={assets} />
           </div>
