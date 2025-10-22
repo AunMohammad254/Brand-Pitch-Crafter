@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <head>
       </head>
-      <body className="font-body antialiased bg-background text-foreground" suppressHydrationWarning>
+      <body className="font-body antialiased bg-background text-foreground">
         <ThemeProvider
             defaultTheme="system"
             storageKey="vite-ui-theme"
