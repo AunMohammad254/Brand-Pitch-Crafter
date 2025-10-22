@@ -1,4 +1,5 @@
 
+
 'use client'
 
 import { type BrandAssets } from '@/app/actions';
@@ -8,19 +9,27 @@ import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorP
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
-type ResultsDisplayProps = {
-  assets: BrandAssets;
+type GeneratedCodeProps = {
+    assets: BrandAssets;
 };
 
-const GeneratedCode = () => {
+const GeneratedCode = ({ assets }: GeneratedCodeProps) => {
     const { toast } = useToast();
     const code = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width-device-width, initial-scale-1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MediAI - Personalized Health, Simplified</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <style>
@@ -66,10 +75,25 @@ const GeneratedCode = () => {
                     <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-green-500"/> Modern Styling</span>
                  </div>
                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                        <MonitorPlay className="mr-2 h-4 w-4"/>
-                        Preview Website
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                                <MonitorPlay className="mr-2 h-4 w-4"/>
+                                Preview Website
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
+                            <DialogHeader>
+                                <DialogTitle>{assets.startupName} - Landing Page Preview</DialogTitle>
+                                <DialogDescription>
+                                    This is a live preview of your generated landing page.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className='flex-grow overflow-auto'>
+                                <LandingPagePreview assets={assets}/>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
                     <Button size="sm" onClick={copyToClipboard} className="bg-indigo-500 hover:bg-indigo-600 text-white">
                         <Copy className="mr-2 h-4 w-4"/>
                         Copy Code
@@ -138,7 +162,7 @@ export function ResultsDisplay({ assets }: ResultsDisplayProps) {
             </div>
         </TabsContent>
         <TabsContent value="website" className="mt-6">
-            <GeneratedCode />
+            <GeneratedCode assets={assets} />
         </TabsContent>
       </Tabs>
     </div>
