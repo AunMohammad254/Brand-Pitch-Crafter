@@ -1,3 +1,4 @@
+
 'use client';
 
 import { type BrandAssets } from '@/app/actions';
@@ -67,7 +68,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
               </div>
             </nav>
             <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10">
+              <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 mt-16">
                 <DialogTitle asChild>
                   <VisuallyHidden>
                     <h2>Mobile Menu</h2>
