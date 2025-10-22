@@ -1,0 +1,256 @@
+{
+  "entities": {
+    "Startup": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Startup",
+      "type": "object",
+      "description": "Represents a startup company and its core attributes.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Startup entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Startup)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the startup, generated or provided by the user."
+        },
+        "niche": {
+          "type": "string",
+          "description": "The specific niche the startup operates in."
+        },
+        "idea": {
+          "type": "string",
+          "description": "A description of the startup's core idea or concept."
+        },
+        "tagline": {
+          "type": "string",
+          "description": "Tagline for the startup, generated or provided by the user."
+        },
+        "problemStatement": {
+          "type": "string",
+          "description": "A clear definition of the problem the startup is solving."
+        },
+        "solutionDescription": {
+          "type": "string",
+          "description": "A description of the startup's proposed solution to the problem."
+        },
+        "uvp": {
+          "type": "string",
+          "description": "The startup's Unique Value Proposition."
+        },
+        "targetAudienceDescription": {
+          "type": "string",
+          "description": "Description of target audience."
+        },
+        "landingPageCopy": {
+          "type": "string",
+          "description": "Content for the landing page, generated or edited by the user."
+        },
+        "landingPageUrl": {
+          "type": "string",
+          "description": "URL of the generated landing page."
+        },
+        "colorPaletteId": {
+          "type": "string",
+          "description": "Reference to ColorPalette. (Relationship: Startup 1:1 ColorPalette)"
+        },
+        "logoSuggestionId": {
+          "type": "string",
+          "description": "Reference to LogoSuggestion. (Relationship: Startup 1:1 LogoSuggestion)"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "niche",
+        "idea",
+        "problemStatement",
+        "solutionDescription",
+        "uvp",
+        "targetAudienceDescription",
+        "landingPageCopy"
+      ]
+    },
+    "ColorPalette": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ColorPalette",
+      "type": "object",
+      "description": "Represents a color palette associated with a startup.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ColorPalette entity."
+        },
+        "primaryColor": {
+          "type": "string",
+          "description": "The primary color of the palette (e.g., Deep violet (#9400D3))."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "The background color of the palette (e.g., Very light lavender (#F0F8FF))."
+        },
+        "accentColor": {
+          "type": "string",
+          "description": "The accent color of the palette (e.g., Deep Indigo (#4B0082))."
+        }
+      },
+      "required": [
+        "id",
+        "primaryColor",
+        "backgroundColor",
+        "accentColor"
+      ]
+    },
+    "LogoSuggestion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "LogoSuggestion",
+      "type": "object",
+      "description": "Represents a logo design suggestion for a startup.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the LogoSuggestion entity."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the logo suggestion."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL to the logo image."
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "imageUrl"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "name"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. The 'userId' parameter identifies the user. This is a path-based ownership model.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/startups/{startupId}",
+        "definition": {
+          "entityName": "Startup",
+          "schema": {
+            "$ref": "#/backend/entities/Startup"
+          },
+          "description": "Stores startups owned by a specific user. The 'userId' parameter identifies the owner, and the 'startupId' parameter identifies the startup. This structure enables simple security rules based on user ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user (owner)."
+            },
+            {
+              "name": "startupId",
+              "description": "The unique identifier of the startup."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/startups/{startupId}/colorPalettes/{colorPaletteId}",
+        "definition": {
+          "entityName": "ColorPalette",
+          "schema": {
+            "$ref": "#/backend/entities/ColorPalette"
+          },
+          "description": "Stores color palettes associated with a startup. The 'userId' and 'startupId' parameters identify the owner and the related startup, while 'colorPaletteId' specifies the color palette.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user (owner)."
+            },
+            {
+              "name": "startupId",
+              "description": "The unique identifier of the startup."
+            },
+            {
+              "name": "colorPaletteId",
+              "description": "The unique identifier of the color palette."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/startups/{startupId}/logoSuggestions/{logoSuggestionId}",
+        "definition": {
+          "entityName": "LogoSuggestion",
+          "schema": {
+            "$ref": "#/backend/entities/LogoSuggestion"
+          },
+          "description": "Stores logo suggestions for a startup. The 'userId' and 'startupId' identify the owner and the associated startup, while 'logoSuggestionId' specifies the suggestion.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user (owner)."
+            },
+            {
+              "name": "startupId",
+              "description": "The unique identifier of the startup."
+            },
+            {
+              "name": "logoSuggestionId",
+              "description": "The unique identifier of the logo suggestion."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure authorization independence, clarity, and scalability for the Brand Visionary application. We leverage path-based ownership for user-owned data (Startups, ColorPalettes, and LogoSuggestions) to simplify security rules and eliminate the need for complex `get()` calls, thereby enabling atomic operations. The structure segregates data based on access needs and employs structural segregation to make authorization intent more explicit. Specifically, Startups, ColorPalettes, and LogoSuggestions are nested under each user's document, reflecting a `User 1:N Startup 1:1 ColorPalette, LogoSuggestion` relationship. This structure enables straightforward and secure list operations. By using this approach, the application ensures data integrity regarding ownership and minimizes the risk of security vulnerabilities due to overly complex rules. Each startup contains all the data needed to generate a page, with no outside lookups needed."
+  }
+}

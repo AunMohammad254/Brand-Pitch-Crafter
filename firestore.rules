@@ -1,0 +1,123 @@
+/**
+ * @file Firestore Security Rules for Brand Visionary
+ * @core_philosophy This ruleset enforces a strict user-ownership model. Each user owns their data tree,
+ *                and only the authenticated user can read or write to their own data.
+ * @data_structure The data is nested under /users/{userId}, reflecting a 1:N relationship for startups,
+ *                 color palettes, and logo suggestions.
+ * @key_security_decisions
+ *   - All data is private by default, accessible only to the owning user.
+ *   - List operations are restricted to the owning user for subcollections.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Secure user profiles. Only the authenticated user can read or write their own profile.
+     * @path /users/{userId}
+     * @allow (create) User with ID 'user123' creates their profile.
+     * @allow (get) User with ID 'user123' reads their profile.
+     * @allow (update) User with ID 'user123' updates their profile.
+     * @allow (delete) User with ID 'user123' deletes their profile.
+     * @deny (create) User with ID 'user456' attempts to create a profile with ID 'user123'.
+     * @deny (get) User with ID 'user456' attempts to read profile with ID 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if isSignedIn() && isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+    /**
+     * @description Secure startups owned by a specific user. Only the owner can create, read, update, or delete their startups.
+     * @path /users/{userId}/startups/{startupId}
+     * @allow (create) User with ID 'user123' creates a startup.
+     * @allow (get) User with ID 'user123' reads their startup.
+     * @allow (update) User with ID 'user123' updates their startup.
+     * @allow (delete) User with ID 'user123' deletes their startup.
+     * @deny (create) User with ID 'user456' attempts to create a startup under user 'user123'.
+     * @deny (get) User with ID 'user456' attempts to read startup under user 'user123'.
+     * @principle Enforces document ownership for writes and reads.
+     */
+    match /users/{userId}/startups/{startupId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if isSignedIn() && isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+     /**
+      * @description Secure color palettes associated with a startup. Only the startup owner can manage color palettes.
+      * @path /users/{userId}/startups/{startupId}/colorPalettes/{colorPaletteId}
+      * @allow (create) User 'user123' creates a color palette for their startup 'startup456'.
+      * @allow (get) User 'user123' reads a color palette for their startup 'startup456'.
+      * @allow (update) User 'user123' updates a color palette for their startup 'startup456'.
+      * @allow (delete) User 'user123' deletes a color palette for their startup 'startup456'.
+      * @deny (create) User 'user456' attempts to create a color palette for startup 'startup456' owned by 'user123'.
+      * @deny (get) User 'user456' attempts to read a color palette for startup 'startup456' owned by 'user123'.
+      * @principle Enforces strict user ownership for all color palette data.
+      */
+    match /users/{userId}/startups/{startupId}/colorPalettes/{colorPaletteId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if isSignedIn() && isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+    /**
+     * @description Secure logo suggestions for a startup. Only the startup owner can manage logo suggestions.
+     * @path /users/{userId}/startups/{startupId}/logoSuggestions/{logoSuggestionId}
+     * @allow (create) User 'user123' creates a logo suggestion for their startup 'startup456'.
+     * @allow (get) User 'user123' reads a logo suggestion for their startup 'startup456'.
+     * @allow (update) User 'user123' updates a logo suggestion for their startup 'startup456'.
+     * @allow (delete) User 'user123' deletes a logo suggestion for their startup 'startup456'.
+     * @deny (create) User 'user456' attempts to create a logo suggestion for startup 'startup456' owned by 'user123'.
+     * @deny (get) User 'user456' attempts to read a logo suggestion for startup 'startup456' owned by 'user123'.
+     * @principle Enforces strict user ownership for all logo suggestion data.
+     */
+    match /users/{userId}/startups/{startupId}/logoSuggestions/{logoSuggestionId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if isSignedIn() && isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+  }
+}
