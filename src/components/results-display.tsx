@@ -1,7 +1,10 @@
+
+'use client'
+
 import { type BrandAssets } from '@/app/actions';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { LandingPagePreview } from '@/components/landing-page-preview';
-import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorPlay } from 'lucide-react';
+import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorPlay, Save } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from '@/components/ui/button';
@@ -79,6 +82,27 @@ const GeneratedCode = () => {
 
 
 export function ResultsDisplay({ assets }: ResultsDisplayProps) {
+  const { toast } = useToast();
+
+  const handleSavePitch = () => {
+    try {
+      const savedPitches = JSON.parse(localStorage.getItem('savedPitches') || '[]') as BrandAssets[];
+      const newPitch = { ...assets, id: new Date().toISOString() };
+      savedPitches.push(newPitch);
+      localStorage.setItem('savedPitches', JSON.stringify(savedPitches));
+      toast({
+        title: "Pitch Saved!",
+        description: `${assets.startupName} has been saved to your pitches.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error Saving Pitch",
+        description: "Could not save the pitch to your browser's local storage.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -88,6 +112,12 @@ export function ResultsDisplay({ assets }: ResultsDisplayProps) {
         <p className="mt-2 max-w-2xl mx-auto text-lg text-slate-600">
          Here's everything we've created for <span className="font-bold text-primary">{assets.startupName}</span>.
         </p>
+      </div>
+
+      <div className='flex justify-center'>
+        <Button onClick={handleSavePitch}>
+          <Save className="mr-2 h-4 w-4" /> Save Pitch
+        </Button>
       </div>
 
       <Tabs defaultValue="pitch" className="w-full max-w-5xl mx-auto">

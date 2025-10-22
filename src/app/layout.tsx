@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { Sparkles, LayoutGrid, LogOut, ArrowLeft, Pencil, Bot, FileCheck, Save, ChevronRight, FileText, Code, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'PitchCraft AI',
@@ -27,22 +28,26 @@ export default function RootLayout({
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
+                  <Link href="/" className="flex items-center gap-2">
                     <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-2 rounded-lg">
                       <Bot className="h-6 w-6 text-white" />
                     </div>
                     <span className="font-headline text-2xl font-extrabold text-slate-900 tracking-tight">PitchCraft AI</span>
-                  </div>
+                  </Link>
                 </div>
                 <nav className="hidden md:flex items-center gap-2">
-                  <Button variant="ghost" size="sm">
-                    <Pencil className="mr-2 h-4 w-4" />
-                    Generate Pitch
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <LayoutGrid className="mr-2 h-4 w-4" />
-                    My Pitches
-                  </Button>
+                  <Link href="/">
+                    <Button variant="ghost" size="sm">
+                      <Pencil className="mr-2 h-4 w-4" />
+                      Generate Pitch
+                    </Button>
+                  </Link>
+                  <Link href="/my-pitches">
+                    <Button variant="ghost" size="sm">
+                      <LayoutGrid className="mr-2 h-4 w-4" />
+                      My Pitches
+                    </Button>
+                  </Link>
                   <Button variant="ghost" size="sm">
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign Out

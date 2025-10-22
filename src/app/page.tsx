@@ -7,6 +7,7 @@ import { ResultsDisplay } from '@/components/results-display';
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Bot, Pencil, CheckCircle, FileCheck, Save, ArrowLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function Home() {
   const [assets, setAssets] = useState<BrandAssets | null>(null);
@@ -51,10 +52,12 @@ export default function Home() {
         <div className="flex flex-col items-start gap-8">
             <div className="w-full">
                 <div className="flex items-center gap-4 mb-4">
+                  <Link href="/my-pitches">
                     <Button variant="outline" size="sm">
                         <ArrowLeft className="mr-2 h-4 w-4"/>
                         Back to My Pitches
                     </Button>
+                  </Link>
                 </div>
                 <div className="flex items-center justify-center p-2 rounded-full bg-slate-100 border border-slate-200 w-full max-w-md mx-auto">
                     {steps.map((step, index) => (
