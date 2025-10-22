@@ -43,35 +43,28 @@ export default function LoginPage() {
       router.push('/my-pitches');
     }
   }, [user, isUserLoading, router]);
-  
-  const onSubmit = async (data: LoginFormValues) => {
+
+  const onSubmit = (data: LoginFormValues) => {
     setAuthError(null);
-    try {
-      if (isSigningUp) {
-        await initiateEmailSignUp(auth, data.email, data.password);
-        toast({
-            title: "Account Created",
-            description: "You have been signed up successfully.",
-        });
-      } else {
-        await initiateEmailSignIn(auth, data.email, data.password);
-        toast({
-            title: "Signed In",
-            description: "You have been signed in successfully.",
-        });
-      }
-      router.push('/my-pitches');
-    } catch (e) {
-        const error = e as FirebaseError;
+    if (isSigningUp) {
+      initiateEmailSignUp(auth, data.email, data.password, (error) => {
         let errorMessage = 'An unexpected error occurred. Please try again.';
         if (error.code === 'auth/email-already-in-use') {
-            errorMessage = 'This email is already in use. Please try signing in.';
-        } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+          errorMessage = 'This email is already in use. Please try signing in.';
+        }
+        setAuthError(errorMessage);
+      });
+    } else {
+      initiateEmailSignIn(auth, data.email, data.password, (error) => {
+        let errorMessage = 'An unexpected error occurred. Please try again.';
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
             errorMessage = 'Invalid email or password. Please try again.';
         }
         setAuthError(errorMessage);
+      });
     }
   };
+  
 
   if (isUserLoading || user) {
     return (

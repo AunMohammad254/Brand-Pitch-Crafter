@@ -126,23 +126,14 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
         router.push('/login');
         return;
     }
-    try {
-      const startupsCollection = collection(firestore, 'users', user.uid, 'startups');
-      addDocumentNonBlocking(startupsCollection, assets);
-      
-      toast({
-        title: "Pitch Saved!",
-        description: `${assets.startupName} has been saved to your pitches.`,
-      });
-      router.push('/my-pitches');
-    } catch (error) {
-      console.error("Error saving pitch: ", error);
-      toast({
-        title: "Error Saving Pitch",
-        description: "Could not save the pitch to Firestore.",
-        variant: "destructive",
-      });
-    }
+    const startupsCollection = collection(firestore, 'users', user.uid, 'startups');
+    addDocumentNonBlocking(startupsCollection, assets);
+    
+    toast({
+      title: "Pitch Saved!",
+      description: `${assets.startupName} has been saved to your pitches.`,
+    });
+    router.push('/my-pitches');
   };
 
   const landingPageCopy = assets.landingPageCopy;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect } from 'react';
 import { type BrandAssets } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { PlusCircle, Trash2, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useCollection, useFirebase, useMemoFirebase } from '@/firebase';
-import { collection, deleteDoc, doc } from 'firebase/firestore';
+import { useCollection, useFirebase, useMemoFirebase, deleteDocumentNonBlocking } from '@/firebase';
+import { collection, doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 
 export default function MyPitchesPage() {
@@ -30,22 +30,13 @@ export default function MyPitchesPage() {
     }
   }, [user, isUserLoading, router]);
 
-  const deletePitch = async (pitchId: string) => {
+  const deletePitch = (pitchId: string) => {
     if (!user) return;
-    try {
-      await deleteDoc(doc(firestore, 'users', user.uid, 'startups', pitchId));
-      toast({
-          title: "Pitch Deleted",
-          description: "The pitch has been removed from your saved list.",
-      });
-    } catch (error) {
-        console.error("Error deleting pitch:", error);
-        toast({
-            title: "Error",
-            description: "Could not delete the pitch. Please try again.",
-            variant: "destructive",
-        })
-    }
+    deleteDocumentNonBlocking(doc(firestore, 'users', user.uid, 'startups', pitchId));
+    toast({
+        title: "Pitch Deleted",
+        description: "The pitch has been removed from your saved list.",
+    });
   }
 
   if (isUserLoading || isLoadingPitches) {
