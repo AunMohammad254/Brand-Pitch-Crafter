@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect } from 'react';
@@ -50,7 +51,7 @@ export default function MyPitchesPage() {
   return (
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="font-headline text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="font-headline text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
           My Pitches
         </h1>
         <Link href="/">
