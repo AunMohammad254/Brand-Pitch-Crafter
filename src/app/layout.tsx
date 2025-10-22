@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import { Sparkles, LayoutGrid, LogOut, ArrowLeft, Pencil, Bot, FileCheck, Save, ChevronRight, FileText, Code, Settings, User as UserIcon } from 'lucide-react';
+import { Bot, LayoutGrid, Menu, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { AuthButtons } from '@/components/auth-buttons';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 
 export const metadata: Metadata = {
@@ -54,9 +55,35 @@ export default function RootLayout({
                     </Link>
                     <AuthButtons />
                   </nav>
-                  <Button variant="ghost" className="md:hidden">
-                    <Settings className="h-5 w-5"/>
-                  </Button>
+                  <div className="md:hidden">
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <Menu className="h-5 w-5"/>
+                          <span className="sr-only">Open Menu</span>
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent>
+                        <nav className="flex flex-col gap-4 mt-8">
+                            <Link href="/">
+                              <Button variant="ghost" className="w-full justify-start">
+                                <Pencil className="mr-2 h-4 w-4" />
+                                Generate Pitch
+                              </Button>
+                            </Link>
+                            <Link href="/my-pitches">
+                              <Button variant="ghost" className="w-full justify-start">
+                                <LayoutGrid className="mr-2 h-4 w-4" />
+                                My Pitches
+                              </Button>
+                            </Link>
+                            <div className="border-t pt-4">
+                                <AuthButtons />
+                            </div>
+                        </nav>
+                      </SheetContent>
+                    </Sheet>
+                  </div>
                 </div>
               </div>
             </header>
@@ -73,7 +100,7 @@ export default function RootLayout({
                   </div>
                 </div>
                 <p className="font-headline text-lg font-bold text-slate-800">PitchCraft AI</p>
-                <p className="mt-2 text-sm">Built with ❤️ by Aun Abbas using React + Supabase + Gemini</p>
+                <p className="mt-2 text-sm">Built with Firebase and Genkit</p>
                 <p className="mt-1 text-sm max-w-md mx-auto">Transform your innovative ideas into compelling startup pitches with the power of artificial intelligence.</p>
                 <div className="mt-4 flex justify-center gap-4 text-sm font-semibold">
                   <span>AI-Powered</span>

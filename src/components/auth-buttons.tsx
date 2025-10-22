@@ -12,32 +12,38 @@ export function AuthButtons() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut(auth);
-    router.push('/login');
+    if (auth) {
+      await signOut(auth);
+      router.push('/login');
+    }
   };
 
   if (isUserLoading) {
-    return <Loader2 className="h-5 w-5 animate-spin" />;
+    return (
+      <div className="flex items-center justify-center w-full">
+        <Loader2 className="h-5 w-5 animate-spin" />
+      </div>
+    );
   }
 
   if (user) {
     return (
-      <>
-        <span className="flex items-center gap-2 text-sm font-medium text-slate-600">
+      <div className="flex flex-col md:flex-row md:items-center gap-2 w-full">
+        <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
             <UserIcon className="h-4 w-4"/>
-            {user.email}
-        </span>
-        <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <span className="truncate">{user.email}</span>
+        </div>
+        <Button variant="ghost" size="sm" onClick={handleSignOut} className="w-full md:w-auto justify-start md:justify-center">
           <LogOut className="mr-2 h-4 w-4" />
           Sign Out
         </Button>
-      </>
+      </div>
     );
   }
 
   return (
-    <Link href="/login">
-      <Button variant="ghost" size="sm">
+    <Link href="/login" className="w-full">
+      <Button variant="ghost" size="sm" className="w-full justify-start md:justify-center">
         <LogIn className="mr-2 h-4 w-4" />
         Sign In
       </Button>
