@@ -1,14 +1,16 @@
-
-
 'use client'
 
 import { type BrandAssets } from '@/app/actions';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { LandingPagePreview } from '@/components/landing-page-preview';
-import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorPlay, Save } from 'lucide-react';
+import { LogoSuggestions } from '@/components/logo-suggestions';
+import { BrandColors } from '@/components/brand-colors';
+import { TargetAudience } from '@/components/target-audience';
+import { Lightbulb, Palette, CheckCircle, Target, FileText, Code, Copy, MonitorPlay, Save, Briefcase, Zap, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -30,7 +32,7 @@ const GeneratedCode = ({ assets }: GeneratedCodeProps) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MediAI - Personalized Health, Simplified</title>
+        <title>${assets.startupName} - ${assets.taglines[0]}</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <style>
             body {
@@ -105,7 +107,7 @@ const GeneratedCode = ({ assets }: GeneratedCodeProps) => {
 }
 
 
-export function ResultsDisplay({ assets }: ResultsDisplayProps) {
+export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
   const { toast } = useToast();
 
   const handleSavePitch = () => {
@@ -127,17 +129,10 @@ export function ResultsDisplay({ assets }: ResultsDisplayProps) {
     }
   };
 
+  const landingPageCopy = assets.landingPageCopy;
+
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <h2 className="font-headline text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Your Generated Assets
-        </h2>
-        <p className="mt-2 max-w-2xl mx-auto text-lg text-slate-600">
-         Here's everything we've created for <span className="font-bold text-primary">{assets.startupName}</span>.
-        </p>
-      </div>
-
       <div className='flex justify-center'>
         <Button onClick={handleSavePitch}>
           <Save className="mr-2 h-4 w-4" /> Save Pitch
@@ -155,11 +150,135 @@ export function ResultsDisplay({ assets }: ResultsDisplayProps) {
                 Website Code
             </TabsTrigger>
         </TabsList>
-        <TabsContent value="pitch" className="mt-6">
-            <div className="text-center">
-                <h3 className="font-headline text-2xl font-bold text-slate-800">{assets.startupName}</h3>
-                <p className="mt-1 text-slate-600">{assets.taglines[0]}</p>
+        <TabsContent value="pitch" className="mt-8 space-y-8">
+            <div className="text-center p-8 bg-white rounded-2xl shadow-lg border">
+                <h3 className="font-headline text-4xl font-bold text-slate-800">{assets.startupName}</h3>
+                <p className="mt-2 text-lg text-slate-600">{assets.taglines[0]}</p>
+                 <div className="mt-4 flex justify-center gap-2">
+                    <Badge variant="secondary">Digital Health</Badge>
+                    <Badge variant="secondary">3 Target Segments</Badge>
+                    <Badge variant="secondary">AI Generated</Badge>
+                </div>
             </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <Briefcase className="text-primary"/>
+                            Elevator Pitch
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-slate-600">{assets.taglines[1]}</p>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <Zap className="text-primary"/>
+                            Unique Value Proposition
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       <p className="text-slate-600">{assets.landingPageCopy.bodyText}</p>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <AlertTriangle className="text-primary"/>
+                            The Problem
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-slate-600">{assets.problem}</p>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <ShieldCheck className="text-primary"/>
+                            Our Solution
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-slate-600">{assets.solution}</p>
+                    </CardContent>
+                </Card>
+            </div>
+            
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 font-headline">
+                        <Target className="text-primary"/>
+                        Target Audience
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-slate-600 mb-4">{assets.targetAudience.demographics}</p>
+                    <TargetAudience assets={assets} />
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 font-headline">
+                        <FileText className="text-primary"/>
+                        Landing Page Copy
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 className="font-semibold text-slate-700">Headline</h4>
+                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{landingPageCopy.headline}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-slate-700">Subheadline</h4>
+                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{assets.taglines[0]}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-slate-700">Call to Action</h4>
+                            <p className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1">{landingPageCopy.callToAction}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-slate-700">Key Features</h4>
+                             <ul className="text-slate-600 p-3 bg-slate-50 rounded-md mt-1 space-y-1 list-disc list-inside">
+                                {landingPageCopy.keyFeatures.map((feature) => (
+                                    <li key={feature.name}><strong>{feature.name}:</strong> {feature.description}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <Palette className="text-primary"/>
+                            Brand Colors
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <BrandColors />
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 font-headline">
+                            <Lightbulb className="text-primary"/>
+                            Logo Ideas
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <LogoSuggestions assets={assets} />
+                    </CardContent>
+                </Card>
+            </div>
+
         </TabsContent>
         <TabsContent value="website" className="mt-6">
             <GeneratedCode assets={assets} />
