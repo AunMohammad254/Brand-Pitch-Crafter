@@ -5,7 +5,7 @@ import { generateBrandAssets, type BrandAssets } from '@/app/actions';
 import { BrandForm } from '@/components/brand-form';
 import { ResultsDisplay } from '@/components/results-display';
 import { useToast } from "@/hooks/use-toast"
-import { Loader2, Bot, Pencil, CheckCircle, FileCheck, Save, ArrowLeft, ChevronRight } from 'lucide-react';
+import { Loader2, Bot, Pencil, CheckCircle, FileCheck, Save, ArrowLeft, ChevronRight, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -36,11 +36,22 @@ export default function Home() {
     }
   };
 
+  const getStepStatus = (stepName: string) => {
+    if (isLoading) {
+      return stepName === 'Generate' ? 'current' : 'complete';
+    }
+    if (assets) {
+      return stepName === 'Review & Save' ? 'current' : 'complete';
+    }
+    return stepName === 'Describe Idea' ? 'current' : 'upcoming';
+  };
+
   const steps = [
-    { name: 'Describe Idea', icon: CheckCircle, status: 'complete' },
-    { name: 'Generate', icon: CheckCircle, status: 'complete' },
-    { name: 'Review & Save', icon: FileCheck, status: 'current' },
+    { name: 'Describe Idea', icon: Pencil, status: getStepStatus('Describe Idea') },
+    { name: 'Generate', icon: Wand2, status: getStepStatus('Generate') },
+    { name: 'Review & Save', icon: FileCheck, status: getStepStatus('Review & Save') },
   ];
+
 
   return (
     <div className="relative isolate overflow-hidden">
@@ -60,17 +71,23 @@ export default function Home() {
                   </Link>
                 </div>
                 <div className="flex items-center justify-center p-2 rounded-full bg-slate-100 border border-slate-200 w-full max-w-md mx-auto">
-                    {steps.map((step, index) => (
+                    {steps.map((step, index) => {
+                      const isComplete = step.status === 'complete';
+                      const isCurrent = step.status === 'current';
+                      const Icon = isComplete ? CheckCircle : step.icon;
+                      
+                      return (
                         <div key={step.name} className="flex items-center">
                             <div className="flex items-center gap-2">
-                                <step.icon className={`h-5 w-5 ${step.status === 'complete' ? 'text-green-500' : 'text-slate-400'}`} />
-                                <span className={`text-sm font-medium ${step.status === 'complete' ? 'text-slate-700' : 'text-slate-400'}`}>{step.name}</span>
+                                <Icon className={`h-5 w-5 ${isComplete ? 'text-green-500' : isCurrent ? 'text-primary' : 'text-slate-400'}`} />
+                                <span className={`text-sm font-medium ${isComplete ? 'text-slate-700' : isCurrent ? 'text-primary' : 'text-slate-400'}`}>{step.name}</span>
                             </div>
                             {index < steps.length - 1 && (
                                 <ChevronRight className="h-5 w-5 text-slate-300 mx-3"/>
                             )}
                         </div>
-                    ))}
+                      )
+                    })}
                 </div>
             </div>
 
