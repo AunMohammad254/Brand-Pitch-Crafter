@@ -15,7 +15,7 @@ const heroImage = PlaceHolderImages.find(img => img.id === 'hero');
 const featureImage = PlaceHolderImages.find(img => img.id === 'feature1');
 
 
-export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
+export function LandingPagePreview({ assets, showHeader = true }: { assets: BrandAssets, showHeader?: boolean }) {
   const [isMounted, setIsMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -38,71 +38,73 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
     <Card className="overflow-hidden shadow-2xl transition-all hover:shadow-primary/20 rounded-2xl">
       <CardContent className="p-0">
         <div className="bg-background text-foreground">
-          <header className="absolute inset-x-0 top-0 z-50">
-            <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-              <div className="flex lg:flex-1">
-                <a href="#" className="-m-1.5 p-1.5 font-headline text-2xl font-bold text-primary flex items-center gap-2">
-                  <Sparkles/>
-                  {assets.startupName}
-                </a>
-              </div>
-              <div className="flex lg:hidden">
-                <button
-                  type="button"
-                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-foreground"
-                  onClick={() => setMobileMenuOpen(true)}
-                >
-                  <span className="sr-only">Open main menu</span>
-                  <Menu className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-              <div className="hidden lg:flex lg:gap-x-12">
-                {navLinks.map((item) => (
-                  <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground/90 hover:text-foreground">
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-              <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                <Button>{assets.landingPageCopy.callToAction}</Button>
-              </div>
-            </nav>
-            <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 mt-16">
-                <DialogTitle asChild>
-                  <VisuallyHidden>
-                    <h2>Mobile Menu</h2>
-                  </VisuallyHidden>
-                </DialogTitle>
-                <div className="flex items-center justify-between">
+          {showHeader && (
+            <header className="absolute inset-x-0 top-0 z-50">
+              <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+                <div className="flex lg:flex-1">
                   <a href="#" className="-m-1.5 p-1.5 font-headline text-2xl font-bold text-primary flex items-center gap-2">
-                    <Sparkles />
+                    <Sparkles/>
                     {assets.startupName}
                   </a>
                 </div>
-                <div className="mt-6 flow-root">
-                  <div className="-my-6 divide-y divide-gray-500/10 dark:divide-gray-500/20">
-                    <div className="space-y-2 py-6">
-                      {navLinks.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground/90 hover:bg-secondary"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                    <div className="py-6">
-                      <Button className="w-full">{assets.landingPageCopy.callToAction}</Button>
+                <div className="flex lg:hidden">
+                  <button
+                    type="button"
+                    className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-foreground"
+                    onClick={() => setMobileMenuOpen(true)}
+                  >
+                    <span className="sr-only">Open main menu</span>
+                    <Menu className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="hidden lg:flex lg:gap-x-12">
+                  {navLinks.map((item) => (
+                    <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-foreground/90 hover:text-foreground">
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                  <Button>{assets.landingPageCopy.callToAction}</Button>
+                </div>
+              </nav>
+              <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 mt-16">
+                  <DialogTitle asChild>
+                    <VisuallyHidden>
+                      <h2>Mobile Menu</h2>
+                    </VisuallyHidden>
+                  </DialogTitle>
+                  <div className="flex items-center justify-between">
+                    <a href="#" className="-m-1.5 p-1.5 font-headline text-2xl font-bold text-primary flex items-center gap-2">
+                      <Sparkles />
+                      {assets.startupName}
+                    </a>
+                  </div>
+                  <div className="mt-6 flow-root">
+                    <div className="-my-6 divide-y divide-gray-500/10 dark:divide-gray-500/20">
+                      <div className="space-y-2 py-6">
+                        {navLinks.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground/90 hover:bg-secondary"
+                          >
+                            {item.name}
+                          </a>
+                        ))}
+                      </div>
+                      <div className="py-6">
+                        <Button className="w-full">{assets.landingPageCopy.callToAction}</Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </header>
+                </DialogContent>
+              </Dialog>
+            </header>
+          )}
 
-          <div className="relative isolate pt-14 bg-gradient-to-b from-primary/5 to-transparent">
+          <div className={`relative isolate ${showHeader ? 'pt-14' : ''} bg-gradient-to-b from-primary/5 to-transparent`}>
             <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
                 <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-accent opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }}></div>
             </div>
@@ -181,5 +183,7 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
     </Card>
   );
 }
+
+    
 
     

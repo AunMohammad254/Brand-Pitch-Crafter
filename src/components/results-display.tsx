@@ -96,7 +96,7 @@ const GeneratedCode = ({ assets }: GeneratedCodeProps) => {
                                 </DialogDescription>
                             </DialogHeader>
                             <div className='flex-grow overflow-auto'>
-                                <LandingPagePreview assets={assets}/>
+                                <LandingPagePreview assets={assets} showHeader={false} />
                             </div>
                         </DialogContent>
                     </Dialog>
@@ -233,7 +233,7 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
                     <CardTitle className="flex items-center gap-2 font-headline">
                         <FileText className="text-primary"/>
                         Landing Page Copy
-                    </CardTitle>
+                    </CardTitle>.
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
@@ -294,3 +294,5 @@ export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
     </div>
   );
 }
+
+    
