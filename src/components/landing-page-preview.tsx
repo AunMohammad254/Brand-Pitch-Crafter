@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Check, Sparkles, Menu, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 const heroImage = PlaceHolderImages.find(img => img.id === 'hero');
 const featureImage = PlaceHolderImages.find(img => img.id === 'feature1');
@@ -67,6 +68,11 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
             </nav>
             <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <DialogContent className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                <DialogTitle asChild>
+                  <VisuallyHidden>
+                    <h2>Mobile Menu</h2>
+                  </VisuallyHidden>
+                </DialogTitle>
                 <div className="flex items-center justify-between">
                   <a href="#" className="-m-1.5 p-1.5 font-headline text-2xl font-bold text-primary flex items-center gap-2">
                     <Sparkles />
@@ -174,3 +180,5 @@ export function LandingPagePreview({ assets }: { assets: BrandAssets }) {
     </Card>
   );
 }
+
+    
