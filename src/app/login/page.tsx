@@ -76,8 +76,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-50">
-      <Card className="w-full max-w-md shadow-xl">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100/50 to-indigo-200/50 dark:from-purple-950 dark:to-indigo-950">
+      <Card className="w-full max-w-md shadow-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg">
         <CardHeader className="text-center">
           <CardTitle className="font-headline text-3xl">
             {isSigningUp ? 'Create an Account' : 'Welcome Back'}
