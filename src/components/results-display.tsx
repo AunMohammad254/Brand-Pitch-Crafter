@@ -18,7 +18,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { useFirebase } from '@/firebase';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { collection } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 
 type GeneratedCodeProps = {
     assets: BrandAssets;
@@ -109,21 +113,33 @@ const GeneratedCode = ({ assets }: GeneratedCodeProps) => {
 
 export function ResultsDisplay({ assets }: { assets: BrandAssets }) {
   const { toast } = useToast();
+  const { firestore, user } = useFirebase();
+  const router = useRouter();
 
   const handleSavePitch = () => {
+    if (!user) {
+        toast({
+            title: "Please sign in",
+            description: "You need to be signed in to save a pitch.",
+            variant: "destructive",
+        });
+        router.push('/login');
+        return;
+    }
     try {
-      const savedPitches = JSON.parse(localStorage.getItem('savedPitches') || '[]') as BrandAssets[];
-      const newPitch = { ...assets, id: new Date().toISOString() };
-      savedPitches.push(newPitch);
-      localStorage.setItem('savedPitches', JSON.stringify(savedPitches));
+      const startupsCollection = collection(firestore, 'users', user.uid, 'startups');
+      addDocumentNonBlocking(startupsCollection, assets);
+      
       toast({
         title: "Pitch Saved!",
         description: `${assets.startupName} has been saved to your pitches.`,
       });
+      router.push('/my-pitches');
     } catch (error) {
+      console.error("Error saving pitch: ", error);
       toast({
         title: "Error Saving Pitch",
-        description: "Could not save the pitch to your browser's local storage.",
+        description: "Could not save the pitch to Firestore.",
         variant: "destructive",
       });
     }

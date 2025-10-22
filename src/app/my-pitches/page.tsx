@@ -1,32 +1,59 @@
-
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { type BrandAssets } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { PlusCircle, Trash2, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useCollection, useFirebase, useMemoFirebase } from '@/firebase';
+import { collection, deleteDoc, doc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 
 export default function MyPitchesPage() {
-  const [pitches, setPitches] = useState<BrandAssets[]>([]);
   const { toast } = useToast();
+  const { user, isUserLoading, firestore } = useFirebase();
+  const router = useRouter();
+
+  const pitchesQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return collection(firestore, 'users', user.uid, 'startups');
+  }, [firestore, user]);
+
+  const { data: pitches, isLoading: isLoadingPitches } = useCollection<BrandAssets>(pitchesQuery);
 
   useEffect(() => {
-    const savedPitches = JSON.parse(localStorage.getItem('savedPitches') || '[]') as BrandAssets[];
-    setPitches(savedPitches);
-  }, []);
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
 
-  const deletePitch = (pitchId: string) => {
-    const updatedPitches = pitches.filter(p => p.id !== pitchId);
-    setPitches(updatedPitches);
-    localStorage.setItem('savedPitches', JSON.stringify(updatedPitches));
-    toast({
-        title: "Pitch Deleted",
-        description: "The pitch has been removed from your saved list.",
-    })
+  const deletePitch = async (pitchId: string) => {
+    if (!user) return;
+    try {
+      await deleteDoc(doc(firestore, 'users', user.uid, 'startups', pitchId));
+      toast({
+          title: "Pitch Deleted",
+          description: "The pitch has been removed from your saved list.",
+      });
+    } catch (error) {
+        console.error("Error deleting pitch:", error);
+        toast({
+            title: "Error",
+            description: "Could not delete the pitch. Please try again.",
+            variant: "destructive",
+        })
+    }
+  }
+
+  if (isUserLoading || isLoadingPitches) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
   return (
@@ -43,7 +70,7 @@ export default function MyPitchesPage() {
         </Link>
       </div>
 
-      {pitches.length === 0 ? (
+      {(!pitches || pitches.length === 0) ? (
         <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-xl">
             <h2 className="font-headline text-xl font-semibold text-slate-700">No Saved Pitches Yet</h2>
             <p className="mt-2 text-slate-500">Start by generating a new pitch to see it here.</p>
